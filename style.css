@@ -1,0 +1,27 @@
+body{
+    margin: 20px;
+    padding:0;
+    background-color: blueviolet;
+}
+header{
+ text-align: center;
+ font-size: 60px;
+ color: antiquewhite;
+ text-shadow: 10px;
+ font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+ border-bottom: 5px black;
+ border-width: 5px;
+}
+button{
+    align-items: center;
+    padding: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 8px;
+    background-color: rgb(211, 120, 120);
+}
+
+button.hover{
+    background-color: rgb(124, 122, 122);
+}
