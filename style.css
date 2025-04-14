@@ -42,15 +42,15 @@ button:hover{
     cursor: pointer;
 }
 
-#output{
+#output,p{
     font-family: 'Times New Roman', Times, serif;
-    font-size: 20px;
+    font-size: 30px;
     font-style: italic;
     color: beige;
     text-align: center;
 }
 
-#userInfo{
+#form{
     margin-top: 30px ;
     display: flex;
     flex-direction: column;
@@ -65,7 +65,7 @@ label {
     width:50%;
 }
 
-input{
+input,textarea{
     padding: 10px;
     width: 50%;
     border-radius: 5px;

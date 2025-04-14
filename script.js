@@ -76,3 +76,44 @@ function displayData(data){
 
    
 }
+
+// send data using post 
+document.getElementById("submitBtn").addEventListener('click', async function (event) {
+    event.preventDefault(); // Prevent form from refreshing the page
+
+    const title = document.getElementById("title").value;
+    const body = document.getElementById("body").value.trim();
+   
+
+    try {
+        const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                title: title,
+                body: body,
+                userId: 2
+            })
+            
+        });
+
+        const data = await response.json();
+
+        // Display confirmation message
+        document.getElementById("response").innerHTML = `
+            <p><strong>Post submitted successfully!</strong></p>
+            <p><strong>Title:</strong> ${data.title}</p>
+            <p><strong>Content:</strong> ${data.body}</p>
+            <p><strong>Post ID:</strong> ${data.id}</p>`;
+
+            document.getElementById("title").value='';
+            document.getElementById("body").value='';
+    } catch (error) {
+        document.getElementById("response").innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+    }
+});
+
+
+// update data using put 
