@@ -8,7 +8,6 @@ document.getElementById('fetchData').addEventListener('click', function() {
             return response.json();
         })
         .then(data => {
-            console.log(data);
             displayData(data);
         })
         .catch(error => console.error('Error fetching data:', error));
@@ -25,7 +24,6 @@ document.getElementById('xhrData').addEventListener('click', function() {
         if (xhr.readyState === 4) { 
             if (xhr.status === 200) { 
                 const data = JSON.parse(xhr.responseText);
-                console.log(data);
                 displayData(data);
             } else {
                 console.error('Error fetching data:', xhr.statusText);
@@ -79,10 +77,10 @@ function displayData(data){
 
 // send data using post 
 document.getElementById("submitBtn").addEventListener('click', async function (event) {
-    event.preventDefault(); // Prevent form from refreshing the page
+    event.preventDefault(); 
 
     const title = document.getElementById("title").value;
-    const body = document.getElementById("body").value.trim();
+    const body = document.getElementById("body").value;
    
 
     try {
@@ -101,7 +99,6 @@ document.getElementById("submitBtn").addEventListener('click', async function (e
 
         const data = await response.json();
 
-        // Display confirmation message
         document.getElementById("response").innerHTML = `
             <p><strong>Post submitted successfully!</strong></p>
             <p><strong>Title:</strong> ${data.title}</p>
@@ -117,3 +114,45 @@ document.getElementById("submitBtn").addEventListener('click', async function (e
 
 
 // update data using put 
+document.getElementById("updateBtn").addEventListener("click",function (event){
+    event.preventDefault();
+
+    const newId = document.getElementById("newId").value;
+    const title = document.getElementById("title").value;
+    const body = document.getElementById("body").value;
+
+  const xhr = new XMLHttpRequest();
+  xhr.open("PUT",`https://jsonplaceholder.typicode.com/posts/${newId}`,true);
+  xhr.setRequestHeader("Content-type","application/json");
+  
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) { 
+        const response = document.getElementById("response");
+        
+        if (xhr.status >= 200 && xhr.status < 300) {
+            const data= JSON.parse(xhr.responseText);
+            response.innerHTML = `
+                <p><strong>Post Updated Successfully!</strong></p>
+                <p><strong>ID:</strong> ${data.id}</p>
+                <p><strong>Title:</strong> ${data.title}</p>
+                <p><strong>Content:</strong> ${data.body}</p>
+            `;
+
+            document.getElementById("title").value='';
+            document.getElementById("body").value='';
+            document.getElementById("newId").value='';
+        } else {
+            response.innerHTML = `<p style='color:red;'>Error: Unable to update post (Status ${xhr.status})</p>`;
+        }
+    }
+};
+
+const updatedPost = {
+    id: newId,
+    title: title,
+    body: body,
+    userId: 1
+};
+
+xhr.send(JSON.stringify(updatedPost));
+});
